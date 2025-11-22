@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Divine Pooja Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🙏</span>
+                <span class="logo-text"><span class="text-saffron">Divine</span> Pooja Store</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link active">Products</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    🛒 Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>🛕 Our Sacred Collection</h1>
+        <p>Discover authentic pooja items for your spiritual journey</p>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section products-section">
+        <div class="container">
+            <!-- Search and Filter Bar -->
+            <div class="filter-bar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
+                </div>
+                <div class="category-filter">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="All">All Categories</option>
+                        <option value="Pooja Essentials">🪔 Pooja Essentials</option>
+                        <option value="God Idols & Photos">🙏 God Idols & Photos</option>
+                        <option value="Garlands & Flowers">💐 Garlands & Flowers</option>
+                        <option value="Pooja Samagri Kits">📦 Pooja Samagri Kits</option>
+                        <option value="Rudraksha & Accessories">📿 Rudraksha & Accessories</option>
+                        <option value="Brass & Copper Items">🔔 Brass & Copper Items</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Category Tags -->
+            <div class="category-tags">
+                <button class="category-tag active" data-category="All">All</button>
+                <button class="category-tag" data-category="Pooja Essentials">Pooja Essentials</button>
+                <button class="category-tag" data-category="God Idols & Photos">God Idols</button>
+                <button class="category-tag" data-category="Garlands & Flowers">Garlands</button>
+                <button class="category-tag" data-category="Pooja Samagri Kits">Puja Kits</button>
+                <button class="category-tag" data-category="Rudraksha & Accessories">Rudraksha</button>
+                <button class="category-tag" data-category="Brass & Copper Items">Brass Items</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid"></div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <span class="no-results-icon">🔍</span>
+                <h3>No products found</h3>
+                <p>Try adjusting your search or filter</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>🙏 Divine Pooja Store</h3>
+                    <p>Bringing Divinity to Your Doorstep</p>
+                </div>
+                <div class="footer-contact">
+                    <p>📍 Hyderabad, Telangana</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@divinepooja.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Divine Pooja Store. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919876543210?text=Hi! I want to order pooja items" target="_blank" class="whatsapp-btn">
+        <span class="whatsapp-icon">💬</span>
+        <span class="whatsapp-text">Order via WhatsApp</span>
+    </a>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message">Added to cart!</span>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            
+            // Check for category in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            if(categoryParam) {
+                document.getElementById('categoryFilter').value = categoryParam;
+                currentCategory = categoryParam;
+            }
+            
+            renderProducts();
+            
+            // Search input listener
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                searchQuery = e.target.value;
+                renderProducts();
+            });
+            
+            // Category filter listener
+            document.getElementById('categoryFilter').addEventListener('change', function(e) {
+                currentCategory = e.target.value;
+                updateCategoryTags();
+                renderProducts();
+            });
+            
+            // Category tags listeners
+            document.querySelectorAll('.category-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    currentCategory = this.dataset.category;
+                    document.getElementById('categoryFilter').value = currentCategory;
+                    updateCategoryTags();
+                    renderProducts();
+                });
+            });
+        });
+        
+        function updateCategoryTags() {
+            document.querySelectorAll('.category-tag').forEach(tag => {
+                tag.classList.toggle('active', tag.dataset.category === currentCategory);
+            });
+        }
+    </script>
+</body>
+</html>
