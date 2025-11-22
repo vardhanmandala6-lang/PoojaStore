@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Divine Pooja Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🙏</span>
+                <span class="logo-text"><span class="text-saffron">Divine</span> Pooja Store</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="cart.html" class="nav-link cart-link active">
+                    🛒 Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>🛒 Your Shopping Cart</h1>
+        <p>Review your sacred items before checkout</p>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="section cart-section">
+        <div class="container">
+            <!-- Empty Cart -->
+            <div class="empty-cart" id="emptyCart" style="display: none;">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p>Add some divine items to your cart</p>
+                <a href="products.html" class="btn btn-primary">Browse Products</a>
+            </div>
+
+            <!-- Cart Content -->
+            <div class="cart-content" id="cartContent">
+                <div class="cart-items" id="cartItems"></div>
+                
+                <div class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery</span>
+                            <span class="text-success">FREE</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="totalAmount">₹0</span>
+                        </div>
+                        <div class="summary-actions">
+                            <a href="payment.html" class="btn btn-primary btn-block">
+                                Proceed to Checkout 🙏
+                            </a>
+                            <a href="products.html" class="btn btn-secondary btn-block">
+                                Continue Shopping
+                            </a>
+                            <button class="btn btn-danger btn-block" onclick="clearCart()">
+                                🗑️ Clear Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>🙏 Divine Pooja Store</h3>
+                    <p>Bringing Divinity to Your Doorstep</p>
+                </div>
+                <div class="footer-contact">
+                    <p>📍 Hyderabad, Telangana</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@divinepooja.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Divine Pooja Store. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919876543210?text=Hi! I want to order pooja items" target="_blank" class="whatsapp-btn">
+        <span class="whatsapp-icon">💬</span>
+        <span class="whatsapp-text">Order via WhatsApp</span>
+    </a>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            renderCartPage();
+        });
+
+        function renderCartPage() {
+            const cart = getCart();
+            const cartContent = document.getElementById('cartContent');
+            const emptyCart = document.getElementById('emptyCart');
+            const cartItems = document.getElementById('cartItems');
+
+            if(cart.length === 0) {
+                cartContent.style.display = 'none';
+                emptyCart.style.display = 'block';
+                return;
+            }
+
+            cartContent.style.display = 'grid';
+            emptyCart.style.display = 'none';
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-name">${item.name}</h3>
+                        <p class="cart-item-category">${item.category}</p>
+                        <p class="cart-item-price">₹${item.price}</p>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                        <span class="qty-value">${item.qty}</span>
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <div class="cart-item-total">
+                        ₹${item.price * item.qty}
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
+                        ✕
+                    </button>
+                </div>
+            `).join('');
+
+            const total = getCartTotal();
+            document.getElementById('subtotal').textContent = `₹${total}`;
+            document.getElementById('totalAmount').textContent = `₹${total}`;
+        }
+
+        function updateQuantity(id, change) {
+            let cart = getCart();
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.qty += change;
+                if(item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                saveCart(cart);
+                updateCartCount();
+                renderCartPage();
+            }
+        }
+
+        function removeFromCart(id) {
+            let cart = getCart();
+            cart = cart.filter(i => i.id !== id);
+            saveCart(cart);
+            updateCartCount();
+            renderCartPage();
+        }
+
+        function clearCart() {
+            if(confirm('Are you sure you want to clear your cart?')) {
+                saveCart([]);
+                updateCartCount();
+                renderCartPage();
+            }
+        }
+    </script>
+</body>
+</html>
