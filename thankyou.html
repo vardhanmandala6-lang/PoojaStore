@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Divine Pooja Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🙏</span>
+                <span class="logo-text"><span class="text-saffron">Divine</span> Pooja Store</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    🛒 Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Thank You Section -->
+    <section class="thankyou-section">
+        <div class="container">
+            <div class="thankyou-card">
+                <div class="thankyou-animation">
+                    <div class="checkmark-circle">
+                        <span class="checkmark">✓</span>
+                    </div>
+                </div>
+                
+                <div class="thankyou-icon">🙏</div>
+                
+                <h1 class="thankyou-title">Thank You!</h1>
+                
+                <p class="thankyou-subtitle">
+                    Your order has been placed successfully
+                </p>
+                
+                <div class="thankyou-message">
+                    <div class="message-icon">🛕</div>
+                    <p>Your divine pooja items will be delivered soon.</p>
+                    <p>May your prayers be blessed! 🙏</p>
+                </div>
+
+                <div class="order-info">
+                    <div class="info-item">
+                        <span class="info-icon">📦</span>
+                        <div>
+                            <strong>Order Confirmed</strong>
+                            <p>You will receive SMS confirmation</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">🚚</span>
+                        <div>
+                            <strong>Delivery in 2-3 Days</strong>
+                            <p>Within Hyderabad areas</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">📞</span>
+                        <div>
+                            <strong>Need Help?</strong>
+                            <p>Call us: +91 98765 43210</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="thankyou-actions">
+                    <a href="index.html" class="btn btn-primary btn-large">
+                        🏠 Back to Home
+                    </a>
+                    <a href="products.html" class="btn btn-secondary">
+                        Continue Shopping →
+                    </a>
+                </div>
+
+                <div class="blessing-text">
+                    <p>॥ सर्वे भवन्तु सुखिनः ॥</p>
+                    <p class="blessing-meaning">May all beings be happy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>🙏 Divine Pooja Store</h3>
+                    <p>Bringing Divinity to Your Doorstep</p>
+                </div>
+                <div class="footer-contact">
+                    <p>📍 Hyderabad, Telangana</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@divinepooja.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Divine Pooja Store. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
